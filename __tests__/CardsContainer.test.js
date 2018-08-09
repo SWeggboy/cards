@@ -12,38 +12,44 @@ const clubs = [{"suit":"Clubs","rank":"1"},{"suit":"Clubs","rank":"2"},{"suit":"
 const spades = [{"suit":"Spades","rank":"1"},{"suit":"Spades","rank":"2"},{"suit":"Spades","rank":"3"},{"suit":"Spades","rank":"4"},{"suit":"Spades","rank":"5"},{"suit":"Spades","rank":"6"},{"suit":"Spades","rank":"7"},{"suit":"Spades","rank":"8"},{"suit":"Spades","rank":"9"},{"suit":"Spades","rank":"10"},{"suit":"Spades","rank":"11"},{"suit":"Spades","rank":"12"},{"suit":"Spades","rank":"13"}];
 
 describe('sort/rendering methods within CardCounter', () => {
-    it('should render cards sorted on Reset Me! button click', () => {
+    it('should render cards sorted Reset Me! button click', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#reset-button').simulate('click');
         expect(wrapper.state('cards')).toEqual(cards);
     });
-    it('should sort on Sort Me! button click', () => {
+    it('should render cards sorted on Sort Me! button click', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#sort-button').simulate('click');
         expect(wrapper.state('cards')).toEqual(cards);
     });
+    it('should render cards shuffled on Shuffle Me! button click', () => {
+        const wrapper = shallow(<CardsContainer />);
+        const wCards = wrapper.state('cards');
+        wrapper.find('#shuffle-button').simulate('click');
+        cards.map(c => { // check if shuffled contains same cards as sorted
+            expect(wCards).toContainEqual(c);
+        });
+        expect(wCards.length).toBe(cards.length); // check if length is same as sorted
+        expect(wrapper.state('cards')).not.toEqual(cards); // one in a bazillion chance that shuffled may match sorted...
+    });
     it('should return Hearts on Hearts selection', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#suit-selector').simulate('change',{target: {value: 'Hearts'}});
-        wrapper.find('#sort-button').simulate('click');
-        expect(wrapper.state('cards')).toEqual(hearts);
+        expect(wrapper.state('cards').map(a => a.rank).sort()).toEqual(hearts.map(a => a.rank).sort());
     });
     it('should return Diamonds on Diamonds selection', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#suit-selector').simulate('change',{target: {value: 'Diamonds'}});
-        wrapper.find('#sort-button').simulate('click');
-        expect(wrapper.state('cards')).toEqual(diamonds);
+        expect(wrapper.state('cards').map(a => a.rank).sort()).toEqual(diamonds.map(a => a.rank).sort());
     });
     it('should return Clubs on Clubs selection', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#suit-selector').simulate('change',{target: {value: 'Clubs'}});
-        wrapper.find('#sort-button').simulate('click');
-        expect(wrapper.state('cards')).toEqual(clubs);
+        expect(wrapper.state('cards').map(a => a.rank).sort()).toEqual(clubs.map(a => a.rank).sort());
     });
     it('should return Spades on Spades selection', () => {
         const wrapper = shallow(<CardsContainer />);
         wrapper.find('#suit-selector').simulate('change',{target: {value: 'Spades'}});
-        wrapper.find('#sort-button').simulate('click');
-        expect(wrapper.state('cards')).toEqual(spades);
+        expect(wrapper.state('cards').map(a => a.rank).sort()).toEqual(spades.map(a => a.rank).sort());
     });
 });
