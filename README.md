@@ -38,3 +38,10 @@ Run the following on the command line:
 npm start
 ```
 
+### Running the tests
+
+All test files are located under `__tests__`. Run the following command to execute tests:
+
+```
+npm test
+```

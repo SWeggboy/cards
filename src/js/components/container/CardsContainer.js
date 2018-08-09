@@ -109,10 +109,12 @@ class CardsContainer extends Component {
             <div>
                 <Button
                     text="Shuffle Me!"
+                    id="shuffle-button"
                     onClick={this.shuffleCards}
                 />
                 <Button
                     text="Sort Me!"
+                    id="sort-button"
                     onClick={this.sortCards}
                 />
                 <Select
@@ -123,6 +125,7 @@ class CardsContainer extends Component {
                 />
                 <Button
                     text="Reset Me!"
+                    id="reset-button"
                     onClick={this.generateDeck}
                 />
                 <Cards
