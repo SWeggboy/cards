@@ -47,6 +47,7 @@ class CardsContainer extends Component {
         let swap, temp, sCards = this.state.cards, rand = Rand.create();
 
         for(let i = sCards.length - 1; i > 0; i--) {
+            // Fisher–Yates shuffle
             swap = Math.floor(rand.random() * i);
             temp = sCards[i];
             sCards[i] = sCards[swap];
@@ -107,7 +108,7 @@ class CardsContainer extends Component {
         return (
             <div>
                 <Cards
-                    value={JSON.stringify(cards)}
+                    cards={cards}
                 />
                 <Button
                     text="Shuffle Me!"

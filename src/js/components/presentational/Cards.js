@@ -1,12 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Cards = ({ value }) => (
-    <div className="card">{value}</div>
+const Cards = (props) => (
+        <div class="d-flex flex-row">
+        {props.cards.map((c, i) => {
+            return (
+                <img key={i} src={"/src/img/"+c.suit.charAt(0).toLocaleLowerCase()+c.rank+".png"} className="img-fluid img-thumbnail" />
+            )
+        })}
+        </div>
 );
 
 Cards.propTypes = {
-    value: PropTypes.string.isRequired
+    cards: PropTypes.array.isRequired
 };
 
 export default Cards;
