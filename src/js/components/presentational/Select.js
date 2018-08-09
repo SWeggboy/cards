@@ -6,7 +6,7 @@ const Select = (props) => (
         onChange={props.onChange}
         id={props.name}
         value={props.selectedOption}
-        className="mt-1 ml-1">
+        className="custom-select mt-1 ml-1">
         <option value="">{props.placeholder}</option>
         {props.options.map(opt => {
             return (

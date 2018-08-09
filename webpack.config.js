@@ -22,7 +22,7 @@ module.exports = {
                 test: /.*\.(gif|png|jpe?g)$/i,
                 use:  [
                     {
-                        loader: 'file-loader?name=[name].[ext]'
+                        loader: "file-loader?name=[name].[ext]"
                     }
                 ]
             }

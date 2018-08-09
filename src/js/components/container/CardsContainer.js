@@ -107,9 +107,6 @@ class CardsContainer extends Component {
 
         return (
             <div>
-                <Cards
-                    cards={cards}
-                />
                 <Button
                     text="Shuffle Me!"
                     onClick={this.shuffleCards}
@@ -118,15 +115,18 @@ class CardsContainer extends Component {
                     text="Sort Me!"
                     onClick={this.sortCards}
                 />
-                <Button
-                    text="Reset Me!"
-                    onClick={this.generateDeck}
-                />
                 <Select
                     placeholder="Choose a suit to filter by"
                     id="suit-selector"
                     options={suits}
                     onChange={this.getCardsBySuit}
+                />
+                <Button
+                    text="Reset Me!"
+                    onClick={this.generateDeck}
+                />
+                <Cards
+                    cards={cards}
                 />
             </div>
         );
