@@ -72,5 +72,11 @@ typings/
 # Serverless directories
 .serverless
 
+# Mac
 .DS_Store
+
+# Webstorm IDE
 .idea
+
+# Webpack
+dist
