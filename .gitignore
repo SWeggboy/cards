@@ -79,4 +79,4 @@ typings/
 .idea
 
 # Webpack
-dist
+dist/
