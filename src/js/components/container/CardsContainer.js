@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Rand from "random-seed";
 
 // import from utils and components/presentational
 import Cards from "../presentational/Cards";
 import Button from "../presentational/Button";
 import Select from "../presentational/Select";
+import Randomizer from "../../utils/Randomizer";
 
 class CardsContainer extends Component {
     constructor() {
@@ -44,10 +44,13 @@ class CardsContainer extends Component {
     }
 
     shuffleCards() {
-        let swap, temp, sCards = this.state.cards, rand = Rand.create();
+        let swap;
+        let temp;
+        let sCards = this.state.cards;
+        let rand = new Randomizer({ seed : Date.now() });
 
+        // Fisher–Yates shuffle
         for(let i = sCards.length - 1; i > 0; i--) {
-            // Fisher–Yates shuffle
             swap = Math.floor(rand.random() * i);
             temp = sCards[i];
             sCards[i] = sCards[swap];
@@ -60,7 +63,10 @@ class CardsContainer extends Component {
     }
 
     sortCards() {
-        let arr = this.state.cards, suits = this.state.suits, holes = new Array(suits.length);
+        // pigeonhole sort
+        let arr = this.state.cards;
+        let suits = this.state.suits;
+        let holes = new Array(suits.length);
 
         arr.forEach((val) => {
             suits.forEach((suit, j) => {
@@ -81,7 +87,8 @@ class CardsContainer extends Component {
     }
 
     getCardsBySuit(event) {
-        let suitedCards = [], sCards = this.state.cards;
+        let suitedCards = [];
+        let sCards = this.state.cards;
 
         this.setState({
             suit: event.target.value
