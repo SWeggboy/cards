@@ -13,6 +13,7 @@ class CardsContainer extends Component {
 
         this.state = {
             cards: [],
+            displayCards: [],
             ranks: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"],
             suits: ["Diamonds", "Clubs", "Hearts", "Spades"],
             suit: ""
@@ -30,7 +31,7 @@ class CardsContainer extends Component {
     }
 
     generateDeck() {
-        let cards = [];
+        const cards = [];
 
         this.state.suits.forEach(suit => {
             this.state.ranks.forEach(rank => {
@@ -39,34 +40,36 @@ class CardsContainer extends Component {
         });
 
         this.setState({
-            cards: cards
+            cards,
+            displayCards: cards,
+            suit: "" 
         });
     }
 
     shuffleCards() {
         let swap;
         let temp;
-        let sCards = this.state.cards;
+        let cards = this.state.displayCards;
         let rand = new Randomizer({ seed : Date.now() });
 
         // Fisher–Yates shuffle
-        for(let i = sCards.length - 1; i > 0; i--) {
+        for(let i = cards.length - 1; i > 0; i--) {
             swap = Math.floor(rand.random() * i);
-            temp = sCards[i];
-            sCards[i] = sCards[swap];
-            sCards[swap] = temp;
+            temp = cards[i];
+            cards[i] = cards[swap];
+            cards[swap] = temp;
         }
 
         this.setState({
-            cards: sCards
+            displayCards: cards
         });
     }
 
     sortCards() {
         // pigeonhole sort
-        let arr = this.state.cards;
-        let suits = this.state.suits;
-        let holes = new Array(suits.length);
+        const arr = this.state.displayCards;
+        const suits = this.state.suits;
+        const holes = new Array(suits.length);
 
         arr.forEach((val) => {
             suits.forEach((suit, j) => {
@@ -83,21 +86,22 @@ class CardsContainer extends Component {
             });
         });
 
-        this.setState({ cards: holes.reduce((a, b) => a.concat(b), []) });
+        this.setState({ displayCards: holes.reduce((a, b) => a.concat(b), []) });
     }
 
     getCardsBySuit(event) {
-        let suitedCards = [];
-        let sCards = this.state.cards;
+        const cards = this.state.cards;
+        let displayCards = [];
 
         this.setState({
-            suit: event.target.value
+            suit: event.target.value 
         }, () => {
-            sCards.forEach(card => {
-                if(card.suit === this.state.suit) suitedCards.push(card);
+            cards.forEach(card => {
+                if(card.suit === this.state.suit) displayCards.push(card);
+                else if(!this.state.suit) displayCards = cards;
             });
 
-            this.setState({ cards: suitedCards });
+            this.setState({ displayCards });
         });
     }
 
@@ -110,17 +114,17 @@ class CardsContainer extends Component {
     }
 
     render() {
-        const { cards, suits } = this.state;
+        const { suits, suit, displayCards } = this.state;
 
         return (
             <div>
                 <Button
-                    text="Shuffle Me!"
+                    text="Shuffle"
                     id="shuffle-button"
                     onClick={this.shuffleCards}
                 />
                 <Button
-                    text="Sort Me!"
+                    text="Sort"
                     id="sort-button"
                     onClick={this.sortCards}
                 />
@@ -128,15 +132,16 @@ class CardsContainer extends Component {
                     placeholder="Choose a suit to filter by"
                     id="suit-selector"
                     options={suits}
+                    selectedOption={suit}
                     onChange={this.getCardsBySuit}
                 />
                 <Button
-                    text="Reset Me!"
+                    text="Reset"
                     id="reset-button"
                     onClick={this.generateDeck}
                 />
                 <Cards
-                    cards={cards}
+                    cards={displayCards}
                 />
             </div>
         );
